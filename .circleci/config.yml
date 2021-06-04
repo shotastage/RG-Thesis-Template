@@ -13,6 +13,6 @@ jobs:
       - run:
           name: Build PDF
           command: make all
-      - run
+      - run:
           name: Upload
           command: ../tools/up2discord.sh
