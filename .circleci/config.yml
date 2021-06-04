@@ -1,12 +1,18 @@
-machine:
-  services:
-    - docker
-dependencies:
-  override:
-    - docker info
-    - docker build -t tex .
-test:
-  override:
-    - docker run -v $(pwd):/app --name tex tex latexmk
-  post:
-    - docker cp tex:/app/thesis.pdf $CIRCLE_ARTIFACTS/
+version: 2
+jobs:
+  build:
+    docker:
+      - image: texlive/texlive-full
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apt update
+            apt install -y curl
+      - run:
+          name: Build PDF
+          command: make all
+      - run
+          name: Upload
+          command: ../tools/up2discord.sh
