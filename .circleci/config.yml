@@ -6,11 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies
-          command: |
-            apt update
-            apt install -y curl
-      - run:
           name: Build PDF
           command: make all
       - run:
